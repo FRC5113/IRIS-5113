@@ -1,5 +1,6 @@
-package org.lemons5113.iris;
+package org.lemons5113.iris.gui;
 
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -15,15 +16,17 @@ import javax.swing.JPanel;
 
 import org.opencv.core.Mat;
 
-public class IRISgui {
+public class IRISGui {
 	
 	private JFrame frame;
 	private boolean open = true;
-	IRISCamPanel panel;
+	public IRISCamPanel panel;
 	
-	public IRISgui()
+    public IRISSettingsPanel sett;
+	
+	public IRISGui()
 	{
-
+		
 		frame = new JFrame("5113 IRIS Systems 2015			          ༼ つ ◕_◕ ༽つ GIVE VISION RECOGNITION");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.addWindowListener( new WindowAdapter() {
@@ -32,30 +35,17 @@ public class IRISgui {
                 open = false;
             }
         } );
+        frame.setLayout(new FlowLayout());
+        frame.setBounds(0, 0, 600, 600);
         
+	    sett = new IRISSettingsPanel();
+	    sett.init();
+	    frame.add(sett);
+	    
         
-        frame.setBounds(0, 0, 600, 400);
-        
-		
-        //image
-		BufferedImage myPicture = null;
-		try {
-			myPicture = ImageIO.read(new File("icon.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-		picLabel.setVisible(true);
-		picLabel.setLocation(50, 50);
-		frame.add(picLabel);
-		
-        
-        panel = new IRISCamPanel(500, 300);
-        
-        panel.setVisible(true);
-        panel.setBounds(10, 10, 120, 120);
-        frame.getContentPane().add(panel);
+        panel = new IRISCamPanel(500, 300);        
+        panel.setSize(120, 120);
+        frame.add(panel); 
         
         
         
@@ -68,6 +58,7 @@ public class IRISgui {
 	public void update()
 	{
 		panel.update();
+		sett.update();
 	}
 	
 	public boolean getIsOpened()

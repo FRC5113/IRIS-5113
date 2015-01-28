@@ -24,9 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IRISCamManager
   implements Runnable
 {
-  public static final String NAME = "USB Webcam Viewer";
   public int fps = 30;
-  private static final int PORT = 1180;
+  private int port = 1180;
+  private String usbConnectionIP = "roboIRO-5113.local";
+  private String wirelessConnectionIP = "10.51.13.2";
   private static final byte[] MAGIC_NUMBERS = { 1, 0, 0, 0 };
   private static final int SIZE_640x480 = 0;
   private static final int SIZE_320x240 = 1;
@@ -34,18 +35,29 @@ public class IRISCamManager
   private static final int HW_COMPRESSION = -1;
   private BufferedImage frame = null;
   private final Object frameMutex = new Object();
-  private String errorMessage = null;
+  public String errorMessage = null;
   private Socket socket;
   private Thread thread;
   
-  public void init()
-  {    
+  public void init(int fps, int port, String usbConnection, String wirelessConnection)
+  {
+	  
+	  System.out.println("Init/Retrying camera");
+	  
+	this.fps = fps;
+	this.port = port;
+	this.usbConnectionIP = usbConnection;
+	this.wirelessConnectionIP = wirelessConnection;
+	
 	try {
 		frame = ImageIO.read(new File("icon_small.png"));
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	
+	disconnect();
+	
     this.thread = new Thread(this);
     this.thread.start();
     
@@ -59,10 +71,14 @@ public class IRISCamManager
   
   public void disconnect()
   {
-    this.thread.stop();
+	if(thread != null)
+	{
+		this.thread.stop();
+	}
     if (this.socket != null) {
       try
       {
+    	  System.out.println("Disconnecting, closing socket...");
         this.socket.close();
       }
       catch (IOException e) {}
@@ -75,21 +91,35 @@ public class IRISCamManager
     {
       for(;;)
       {
-    	  System.out.println("at least you tried.." + Robot.getHost());
-        this.socket = new Socket("roboRIO-5113.local", PORT);
-        DataInputStream inputStream = new DataInputStream(this.socket.getInputStream());
-        DataOutputStream outputStream = new DataOutputStream(this.socket.getOutputStream());
-  	  System.out.println("at least you tried.." + Robot.getHost());
+    	  
+    	System.out.println("Trying to connect to " + usbConnectionIP + ":" + port + "...");
+    	
+    	DataInputStream inputStream = null;
+    	DataOutputStream outputStream = null;
+    	
+    	try
+    	{
+    		this.socket = new Socket(usbConnectionIP, port);
+        	inputStream = new DataInputStream(this.socket.getInputStream());
+        	outputStream = new DataOutputStream(this.socket.getOutputStream());
+        }
+    	catch(Exception e)
+    	{
+    		System.out.println("Failed to connect to wired connetion, retrying with wireless...");
+        	System.out.println("Trying to connect to " + wirelessConnectionIP + ":" + port + "...");
 
+    		this.socket = new Socket(wirelessConnectionIP, port);
+        	inputStream = new DataInputStream(this.socket.getInputStream());
+        	outputStream = new DataOutputStream(this.socket.getOutputStream());
+    	}
 
         outputStream.writeInt(fps);
         outputStream.writeInt(-1);
         outputStream.writeInt(0);
         outputStream.flush();
+        
         while (!Thread.interrupted())
         {
-      	  System.out.println("at least you tried..2");
-
           byte[] magic = new byte[4];
           inputStream.readFully(magic);
           int size = inputStream.readInt();
@@ -110,7 +140,6 @@ public class IRISCamManager
             }
             this.frame = ImageIO.read(new ByteArrayInputStream(data));
             this.errorMessage = null;
-            System.out.println("works");
           }
         }
         if (this.socket != null) {
@@ -131,18 +160,21 @@ public class IRISCamManager
     {
       if (this.errorMessage == null) {
         this.errorMessage = e.getMessage();
+        System.out.println("Error: " + errorMessage);
       }
     }
     catch (EOFException e)
     {
       if (this.errorMessage == null) {
         this.errorMessage = "Robot stopped returning images";
+        System.out.println("Error: " + errorMessage);
       }
     }
     catch (IOException e)
     {
       if (this.errorMessage == null) {
         this.errorMessage = e.getMessage();
+        System.out.println("Error: " + errorMessage);
       }
     }
     finally
@@ -152,14 +184,20 @@ public class IRISCamManager
         {
           this.socket.close();
         }
-        catch (IOException e) {}
+        catch (IOException e) {
+            this.errorMessage = e.getMessage();
+            System.out.println("Error: " + errorMessage);
+        }
       }
       try
       {
         Thread.sleep(1000L);
       }
-      catch (InterruptedException e1) {}
+      catch (InterruptedException e1) {
+          this.errorMessage = e1.getMessage();
+          System.out.println("Error: " + errorMessage);
+      }
     }
-    System.out.println("Fatal Error: " + errorMessage);
+    System.err.println("FATAL ERROR (NEEDS RETRY): " + errorMessage);
   }
 }

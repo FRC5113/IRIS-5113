@@ -20,6 +20,13 @@ public class IRISTableManager {
 		init();
 	}
 	
+	//TODO:
+	//When this is set, a network variable is sent to the robot to force it to give back the specified camera.
+	public void RequestCameraName(String name)
+	{
+		
+	}
+	
 	private void init()
 	{
 		try
@@ -39,7 +46,7 @@ public class IRISTableManager {
 			timer = System.currentTimeMillis();
 			double val = Math.random();
 			table.putNumber("testValue",val);
-			System.out.println("new testvalue : " + val);
+			//System.out.println("new testvalue : " + val);
 		}
 	}
 	

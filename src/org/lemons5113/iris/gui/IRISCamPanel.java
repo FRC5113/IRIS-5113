@@ -1,4 +1,4 @@
-package org.lemons5113.iris;
+package org.lemons5113.iris.gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,12 +9,15 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
+import org.lemons5113.iris.IRISCamManager;
 import org.opencv.core.Mat;
 
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
@@ -24,24 +27,13 @@ public class IRISCamPanel extends JPanel {
 	private BufferedImage img;
 	
 	private IRISCamManager mainCam;
-		
+			
     public IRISCamPanel(int width, int height) {
-        //image
-		BufferedImage myPicture = null;
-		try {
-			myPicture = ImageIO.read(new File("icon_small.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-		picLabel.setVisible(true);
-		picLabel.setBounds(0, 0, 32, 32);
-		add(picLabel);
         
 		//Status bar
-    	
+		    	
         setPreferredSize(new Dimension(width, height));
+                
     }
    
     @Override
@@ -54,6 +46,11 @@ public class IRISCamPanel extends JPanel {
     public void setCamera(IRISCamManager manager)
     {
     	mainCam = manager;
+    }
+    
+    public IRISCamManager getCamera()
+    {
+    	return mainCam;
     }
     
     
