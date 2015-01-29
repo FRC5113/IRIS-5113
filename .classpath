@@ -2,12 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/MHS/Documents/GitHub/IRIS-5113/lib/NetworkTables.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MHS/Documents/GitHub/IRIS-5113/lib/SmartDashboard.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MHS/Documents/GitHub/IRIS-5113/lib/WPILib.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MHS/Documents/GitHub/IRIS-5113/lib/opencv-300.jar">
+	<classpathentry kind="lib" path="C:/Users/Lemons/Documents/GitHub/IRIS-5113/lib/NetworkTables.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lemons/Documents/GitHub/IRIS-5113/lib/SmartDashboard.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lemons/Documents/GitHub/IRIS-5113/lib/WPILib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lemons/Documents/GitHub/IRIS-5113/lib/opencv-300.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="IRIS/lib/x64"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="IRIS/lib/x86"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

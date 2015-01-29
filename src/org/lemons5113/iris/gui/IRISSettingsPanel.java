@@ -18,6 +18,7 @@ import javax.swing.SpinnerNumberModel;
 
 import org.lemons5113.iris.IRISCamManager;
 
+//This makes buttons. No seriously, thats practically all it does. Admittedly those buttons are useful but....
 public class IRISSettingsPanel extends JPanel
 {	
 	private JButton button_resetConnection;
@@ -37,13 +38,13 @@ public class IRISSettingsPanel extends JPanel
 	public IRISCamManager camControlled;
 	
 	public void init()
-	{		
-		
+	{
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		button_resetConnection = new JButton("Retry/Reset Connection");
 		button_resetConnection.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 				initCamera();
 			}
 		});
@@ -81,7 +82,8 @@ public class IRISSettingsPanel extends JPanel
 	}
 	
 	@Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) 
+	{
         super.paintComponent(g);
     }
 	

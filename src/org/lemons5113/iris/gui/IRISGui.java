@@ -16,8 +16,10 @@ import javax.swing.JPanel;
 
 import org.opencv.core.Mat;
 
-public class IRISGui {
-	
+//The heart and soul of this gui for VR. This is where the frame itself is made and formatted
+//also,  ༼ つ ◕_◕ ༽つ Yay! Vision Recognition!
+public class IRISGui 
+{	
 	private JFrame frame;
 	private boolean open = true;
 	public IRISCamPanel panel;
@@ -25,8 +27,7 @@ public class IRISGui {
     public IRISSettingsPanel sett;
 	
 	public IRISGui()
-	{
-		
+	{	
 		frame = new JFrame("5113 IRIS Systems 2015			          ༼ つ ◕_◕ ༽つ GIVE VISION RECOGNITION");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.addWindowListener( new WindowAdapter() {

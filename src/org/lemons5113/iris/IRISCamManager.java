@@ -21,18 +21,20 @@ import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+//This is the complicated bit. This is the code that connects to the camera, formats the camera for our use, and a bucket full of error checks.
 public class IRISCamManager
   implements Runnable
 {
-  public int fps = 30;
+	//lots o' variables
+  public int fps = 30;//Frames per second
   private int port = 1180;
   private String usbConnectionIP = "roboIRO-5113.local";
   private String wirelessConnectionIP = "10.51.13.2";
-  private static final byte[] MAGIC_NUMBERS = { 1, 0, 0, 0 };
+  private static final byte[] MAGIC_NUMBERS = { 1, 0, 0, 0 };//The numbers that tell the [RobotRio](not sure) to expect to be working with a camera
   private static final int SIZE_640x480 = 0;
   private static final int SIZE_320x240 = 1;
   private static final int SIZE_160x120 = 2;
-  private static final int HW_COMPRESSION = -1;
+  private static final int HW_COMPRESSION = -1;//can either be -1 or 1, (Also needs to be clarified)
   private BufferedImage frame = null;
   private final Object frameMutex = new Object();
   public String errorMessage = null;
@@ -49,7 +51,8 @@ public class IRISCamManager
 	this.usbConnectionIP = usbConnection;
 	this.wirelessConnectionIP = wirelessConnection;
 	
-	try {
+	try 
+	{
 		frame = ImageIO.read(new File("icon_small.png"));
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -73,7 +76,7 @@ public class IRISCamManager
   {
 	if(thread != null)
 	{
-		this.thread.stop();
+		this.thread.stop();//TODO we can make this just in general better
 	}
     if (this.socket != null) {
       try

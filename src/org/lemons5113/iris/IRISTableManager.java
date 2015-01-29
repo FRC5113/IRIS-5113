@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 //Responsible for outputting and keeping track of all data in the "NetworkTable" object.
 //This is the client side of the table management, NOT run on the robot side.
 
-public class IRISTableManager {
-	
+public class IRISTableManager 
+{	
 	private NetworkTable table;
 	
 	private String robotIP = "roboRIO-5113.local";
@@ -39,6 +39,7 @@ public class IRISTableManager {
 		table = NetworkTable.getTable(tableName);
 	}
 	
+	//ignore it. It totally isn't the code that will allow the robots in FIRST to rise up and enslave the human race
 	public void stupidTestPleaseIgnore()
 	{
 		if(System.currentTimeMillis() > timer + 1000)

@@ -21,13 +21,14 @@ import org.opencv.core.Core;
  *
  */
 
-public class IRISMain {
-	
+public class IRISMain 
+{	
 	private IRISTableManager tables;
 	private IRISGui gui;
 	private IRISCamManager cam;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		new IRISMain();
 	}
 	

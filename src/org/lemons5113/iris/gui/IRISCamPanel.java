@@ -22,22 +22,22 @@ import org.opencv.core.Mat;
 
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
-public class IRISCamPanel extends JPanel {
-	
+//this is how the camera updates its image. AKA, how a bunch of static images make the human eye think something is moving. SCIENCE!
+public class IRISCamPanel extends JPanel 
+{	
 	private BufferedImage img;
 	
 	private IRISCamManager mainCam;
 			
-    public IRISCamPanel(int width, int height) {
-        
-		//Status bar
-		    	
-        setPreferredSize(new Dimension(width, height));
-                
+    public IRISCamPanel(int width, int height) 
+    {    
+		//Status bar   	
+        setPreferredSize(new Dimension(width, height));            
     }
    
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) 
+    {
         super.paintComponent(g);
         img = mainCam.getLastImage();
         g.drawImage(img, 0, 0, null);
@@ -59,6 +59,7 @@ public class IRISCamPanel extends JPanel {
     	repaint();
     }
     
+    //We are not using this yet, although it would allow us to compare the original photo to the filtered image
 	public BufferedImage toBufferedImage(Mat m)
 	{
 	      int type = BufferedImage.TYPE_BYTE_GRAY;
