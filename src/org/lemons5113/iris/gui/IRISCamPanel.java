@@ -18,9 +18,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.lemons5113.iris.IRISCamManager;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.*;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+import com.ni.vision.NIVision.ThresholdData;
 
 //this is how the camera updates its image. AKA, how a bunch of static images make the human eye think something is moving. SCIENCE!
 public class IRISCamPanel extends JPanel 
@@ -34,12 +39,69 @@ public class IRISCamPanel extends JPanel
 		//Status bar   	
         setPreferredSize(new Dimension(width, height));            
     }
+    
+    protected BufferedImage process()
+    {   	
+    	
+    	Mat m = img2Mat(img);
+    	System.out.println("a " + CvType.typeToString(m.type()));
+
+    	
+    	Mat imgHSV = new Mat();
+    	
+    	Imgproc.cvtColor(m, imgHSV, Imgproc.COLOR_BGR2HLS);
+    	//Imgproc.cvtColor(imgHSV, m, Imgproc.COLOR_GRAY2BGR);
+    	
+    //	System.out.println("a2 " + CvType.typeToString(imgHSV.type()));
+
+
+    	Mat thresholdedImg = new Mat();
+    	
+//    	Core.inRange(m, new Scalar(38, 50, 50), new Scalar(255, 100, 100), m);
+    	
+    	Core.inRange(imgHSV, 
+    			new Scalar(IRISColorPicker.colorLow.getBlue(), IRISColorPicker.colorLow.getGreen(), IRISColorPicker.colorLow.getRed()),
+    			new Scalar(IRISColorPicker.colorHigh.getBlue(), IRISColorPicker.colorHigh.getGreen(), IRISColorPicker.colorHigh.getRed()),    			thresholdedImg);
+    //	System.out.println("b " + CvType.typeToString(thresholdedImg.type()));
+    	
+    	Imgproc.cvtColor(thresholdedImg, m, Imgproc.COLOR_GRAY2BGR);
+    	//System.out.println("c " + CvType.typeToString(m.type()));
+
+    	
+    	BufferedImage image2 = mat2Img(m);
+   
+    	    	
+    	//Mat temp = new Mat();
+    	//temp.convertTo(temp, core.);
+    	//Imgproc.cvtColor(mat, temp, Imgproc.COLOR_BGR2HSV);
+    	//Core.inRange(mat, new Scalar(38, 50, 50), new Scalar(255, 100, 100), temp);
+    	//Imgproc.threshold(temp, temp, 127, 255, Imgproc.THRESH_TOZERO);
+    	
+    	    	
+    	
+    	
+    	return image2;
+    }
    
     @Override
     protected void paintComponent(Graphics g) 
     {
         super.paintComponent(g);
+    	
         img = mainCam.getLastImage();
+
+       try
+       {
+    	   if(img != null)
+    		   img = process();
+       }
+       catch(Exception e)
+       {
+       e.printStackTrace();
+       }
+        
+        //img = mainCam.getLastImage();
+        
         g.drawImage(img, 0, 0, null);
     }
     
@@ -59,21 +121,29 @@ public class IRISCamPanel extends JPanel
     	repaint();
     }
     
-    //We are not using this yet, although it would allow us to compare the original photo to the filtered image
-	public BufferedImage toBufferedImage(Mat m)
-	{
-	      int type = BufferedImage.TYPE_BYTE_GRAY;
-	      if (m.channels() > 1 ) {
-	          type = BufferedImage.TYPE_3BYTE_BGR;
-	      }
-	      int bufferSize = m.channels()*m.cols()*m.rows();
-	      byte [] b = new byte[bufferSize];
-	      m.get(0,0,b); // get all the pixels
-	      BufferedImage image = new BufferedImage(m.cols(),m.rows(), type);
-	      final byte[] targetPixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
-	      System.arraycopy(b, 0, targetPixels, 0, b.length);  
-	      return image;
+    public static BufferedImage mat2Img(Mat mat)
+    {
+    	byte[] data = new byte[mat.rows()*mat.cols()*(int)(mat.elemSize())];
+    	mat.get(0, 0, data);
+    	if (mat.channels() == 3) {
+    	 for (int i = 0; i < data.length; i += 3) {
+    	  byte temp = data[i];
+    	  data[i] = data[i + 2];
+    	  data[i + 2] = temp;
+    	 }
+    	}
+		BufferedImage image = new BufferedImage(mat.cols(), mat.rows(), BufferedImage.TYPE_3BYTE_BGR);
+		image.getRaster().setDataElements(0,  0,  mat.cols(), mat.rows(), data);
+		return image;
+    } 
 
-	  }
 
+
+    public static Mat img2Mat(BufferedImage image)
+    {
+    	byte[] data = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+    	Mat mat = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC3);
+    	mat.put(0, 0, data);
+    	return mat;
+    }
 }

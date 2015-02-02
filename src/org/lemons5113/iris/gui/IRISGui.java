@@ -25,6 +25,8 @@ public class IRISGui
 	public IRISCamPanel panel;
 	
     public IRISSettingsPanel sett;
+    
+    public IRISColorPicker colors;
 	
 	public IRISGui()
 	{	
@@ -48,6 +50,11 @@ public class IRISGui
         panel.setSize(120, 120);
         frame.add(panel); 
         
+        colors = new IRISColorPicker();
+        colors.init();
+        frame.add(colors);
+        
+        
         
         
         frame.pack();
@@ -60,6 +67,7 @@ public class IRISGui
 	{
 		panel.update();
 		sett.update();
+		colors.update();
 	}
 	
 	public boolean getIsOpened()
