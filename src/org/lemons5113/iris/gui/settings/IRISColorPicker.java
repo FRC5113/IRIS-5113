@@ -1,4 +1,4 @@
-package org.lemons5113.iris.gui;
+package org.lemons5113.iris.gui.settings;
 
 import java.awt.Color;
 import java.awt.Graphics;

@@ -1,5 +1,6 @@
-package org.lemons5113.iris.gui;
+package org.lemons5113.iris.gui.settings;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
@@ -9,8 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -19,8 +22,16 @@ import javax.swing.SpinnerNumberModel;
 import org.lemons5113.iris.IRISCamManager;
 
 //This makes buttons. No seriously, thats practically all it does. Admittedly those buttons are useful but....
-public class IRISSettingsPanel extends JPanel
+public class IRISSettingsPanel extends SettingsBase
 {	
+	private enum states {Robot_Cam, Image_File, Computer_Cam};
+	private JComboBox type = new JComboBox(states.values());
+	
+	private JPanel roboCameraSetts;
+	private JPanel imageFileSetts;
+	private JPanel compCameraSetts;
+
+	
 	private JButton button_resetConnection;
 	
 	private JLabel label_text_wirelessIP;
@@ -39,7 +50,26 @@ public class IRISSettingsPanel extends JPanel
 	
 	public void init()
 	{
+
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+		roboCameraSetts = new JPanel();
+		roboCameraSetts.setLayout(new BoxLayout(roboCameraSetts, BoxLayout.Y_AXIS));
+		
+		imageFileSetts = new JPanel();
+		imageFileSetts.setLayout(new BoxLayout(imageFileSetts, BoxLayout.Y_AXIS));
+		imageFileSetts.add(new JLabel("TODO"));
+		
+		compCameraSetts = new JPanel();
+		compCameraSetts.setLayout(new BoxLayout(compCameraSetts, BoxLayout.Y_AXIS));
+		compCameraSetts.add(new JLabel("TODO"));
+
+		
+		add(new JLabel("Image Source"));
+		add(type);
+		add(new JLabel(" "));
+		add(new JLabel(" "));
+
 		
 		button_resetConnection = new JButton("Retry/Reset Connection");
 		button_resetConnection.addActionListener(new ActionListener() {
@@ -48,28 +78,36 @@ public class IRISSettingsPanel extends JPanel
 				initCamera();
 			}
 		});
-		add(button_resetConnection);
+		roboCameraSetts.add(button_resetConnection);
 		
 		
 		label_text_wirelessIP = new JLabel("Wireless ip adress (backup)");
-		add(label_text_wirelessIP);
+		roboCameraSetts.add(label_text_wirelessIP);
 		text_wirelessIP = new JTextField("10.51.13.2", 20);
-		add(text_wirelessIP);
+		roboCameraSetts.add(text_wirelessIP);
 		
 		label_text_wiredIP = new JLabel("Wired local adress");
-		add(label_text_wiredIP);
+		roboCameraSetts.add(label_text_wiredIP);
 		text_wiredIP = new JTextField("roboRIO-5113.local", 20);	
-		add(text_wiredIP);
+		roboCameraSetts.add(text_wiredIP);
 		
 		label_spinner_port = new JLabel("Port");
-		add(label_spinner_port);
+		roboCameraSetts.add(label_spinner_port);
 		spinner_port = new JSpinner(new SpinnerNumberModel(1180, 0, 999999, 1));
-		add(spinner_port);
+		roboCameraSetts.add(spinner_port);
 		
 		label_spinner_fps = new JLabel("FPS");
-		add(label_spinner_fps);
+		roboCameraSetts.add(label_spinner_fps);
 		spinner_fps = new JSpinner(new SpinnerNumberModel(24, 0, 999999, 1));
-		add(spinner_fps);
+		roboCameraSetts.add(spinner_fps);
+		
+		roboCameraSetts.setVisible(true);
+		imageFileSetts.setVisible(false);
+		compCameraSetts.setVisible(false);
+
+		add(roboCameraSetts);
+		add(imageFileSetts);
+		add(compCameraSetts);
 		
 		setBorder(BorderFactory.createTitledBorder("Settings"));
 
@@ -88,7 +126,25 @@ public class IRISSettingsPanel extends JPanel
     }
 	
     public void update()
-    {    	
+    {
+    	if(type.getSelectedItem() == states.Computer_Cam)
+    	{
+    		roboCameraSetts.setVisible(false);
+    		imageFileSetts.setVisible(false);
+    		compCameraSetts.setVisible(true);
+    	}
+    	else if(type.getSelectedItem() == states.Robot_Cam)
+    	{
+    		roboCameraSetts.setVisible(true);
+    		imageFileSetts.setVisible(false);
+    		compCameraSetts.setVisible(false);
+    	}
+    	else if(type.getSelectedItem() == states.Image_File)
+    	{
+    		roboCameraSetts.setVisible(false);
+    		imageFileSetts.setVisible(true);;
+    		compCameraSetts.setVisible(false);
+    	}
     	repaint();
     }
 	

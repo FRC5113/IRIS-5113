@@ -28,7 +28,7 @@ public class IRISCamManager
 	//lots o' variables
   public int fps = 30;//Frames per second
   private int port = 1180;
-  private String usbConnectionIP = "roboIRO-5113.local";
+  private String usbConnectionIP = "roboRIO-5113.local";
   private String wirelessConnectionIP = "10.51.13.2";
   private static final byte[] MAGIC_NUMBERS = { 1, 0, 0, 0 };//The numbers that tell the [RobotRio](not sure) to expect to be working with a camera
   private static final int SIZE_640x480 = 0;
@@ -40,31 +40,29 @@ public class IRISCamManager
   public String errorMessage = null;
   private Socket socket;
   private Thread thread;
+  private long lastUpdate = 0;
+  
+  public long getLastUpdate()
+  {
+	  return lastUpdate;
+  }
   
   public void init(int fps, int port, String usbConnection, String wirelessConnection)
   {
 	  
-	  System.out.println("Init/Retrying camera");
+	System.out.println("Init/Retrying camera");
 	  
 	this.fps = fps;
 	this.port = port;
 	this.usbConnectionIP = usbConnection;
 	this.wirelessConnectionIP = wirelessConnection;
-	
-	try 
-	{
-		frame = ImageIO.read(new File("icon_small.png"));
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+
 	
 	disconnect();
 	
     this.thread = new Thread(this);
     this.thread.start();
     
-    ImageIO.setUseCache(false);
   }
   
   public BufferedImage getLastImage()
@@ -143,6 +141,9 @@ public class IRISCamManager
             }
             this.frame = ImageIO.read(new ByteArrayInputStream(data));
             this.errorMessage = null;
+                        
+            lastUpdate = System.currentTimeMillis();
+            
           }
         }
         if (this.socket != null) {

@@ -18,12 +18,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.lemons5113.iris.IRISCamManager;
+import org.lemons5113.iris.gui.settings.IRISColorPicker;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.*;
+import org.opencv.objdetect.Objdetect;
 
 import com.ni.vision.NIVision.ThresholdData;
 
@@ -66,11 +68,14 @@ public class IRISCamPanel extends JPanel
     	
     	Imgproc.cvtColor(thresholdedImg, m, Imgproc.COLOR_GRAY2BGR);
     	//System.out.println("c " + CvType.typeToString(m.type()));
-
+    	
+    	Mat threshold_output;
+    	
+    	
     	
     	BufferedImage image2 = mat2Img(m);
-   
-    	    	
+      	
+    	
     	//Mat temp = new Mat();
     	//temp.convertTo(temp, core.);
     	//Imgproc.cvtColor(mat, temp, Imgproc.COLOR_BGR2HSV);

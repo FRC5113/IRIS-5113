@@ -1,7 +1,7 @@
 package org.lemons5113.iris;
 
 import org.lemons5113.iris.gui.IRISGui;
-import org.lemons5113.iris.gui.IRISSettingsPanel;
+import org.lemons5113.iris.gui.settings.IRISSettingsPanel;
 import org.opencv.core.Core;
 
 /*
@@ -25,7 +25,6 @@ public class IRISMain
 {	
 	private IRISTableManager tables;
 	private IRISGui gui;
-	private IRISCamManager cam;
 	
 	public static void main(String[] args) 
 	{
@@ -48,9 +47,7 @@ public class IRISMain
 	{
 		//Import OpenCV stuffs
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        
-        cam = new IRISCamManager();
-                
+                        
 		initUI();
 		
 		tables = new IRISTableManager();
@@ -59,8 +56,6 @@ public class IRISMain
 	private void initUI()
 	{
 		gui = new IRISGui();
-		gui.panel.setCamera(cam);
-		gui.sett.camControlled = cam;
 	}
 
 }
