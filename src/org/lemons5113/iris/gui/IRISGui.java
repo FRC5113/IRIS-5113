@@ -21,8 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
-import org.lemons5113.iris.gui.settings.IRISColorPicker;
-import org.lemons5113.iris.gui.settings.IRISSettingsPanel;
+import org.lemons5113.iris.gui.settings.ColorPickerSett;
+import org.lemons5113.iris.gui.settings.ImgSourceSett;
 import org.lemons5113.iris.process.SourceImageProc;
 import org.opencv.core.Mat;
 
@@ -38,10 +38,12 @@ public class IRISGui
 	
     //public IRISSettingsPanel sett;
 	
+	SourceImageProc source;
+	
 	private ArrayList<ProcessPanel> panels = new ArrayList<ProcessPanel>();
     	
 	public IRISGui()
-	{	
+	{			
 		frame = new JFrame("5113 IRIS Systems 2015			          ༼ つ ◕_◕ ༽つ GIVE VISION RECOGNITION");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.addWindowListener( new WindowAdapter() {
@@ -57,11 +59,34 @@ public class IRISGui
         aboutMenu.add(about);
         menuBar.add(aboutMenu);
         frame.setJMenuBar(menuBar);
+        /*
+         * TODO:
+         * Help:
+         * About 5113/FRC
+         * About IRIS
+         * Guide/Documentation
+         * 
+         * Settings:
+         * Disable Draw Display Image 
+         * Split Pane or Tabbed Pane
+         * Default Team Number
+         * 
+         * Misc Iris Menu:
+         * Disable/Enable Force Process Unchanged Image Always
+         * Force Process Unchanged Image Once
+         * Load config file
+         * 
+         * Save all info in file
+         * 
+         * Vary HLS/BGR/HSV/Other threshholding
+         */
         
         ProcessPanel panel1 = new ProcPan_Source();
         panels.add(panel1);
-        panel1 = new ProcessPanel();
-        panels.add(panel1);
+        
+        ProcessPanel panel2 = new ProcPan_ColorThresh();
+        panel1.proc.setChild(panel2.proc);
+        panels.add(panel2);
                 
         JTabbedPane processes = new JTabbedPane();
 
@@ -88,6 +113,7 @@ public class IRISGui
 	{
 		for(ProcessPanel p : panels)
 			p.update();
+		
 	}
 	
 	public boolean getIsOpened()

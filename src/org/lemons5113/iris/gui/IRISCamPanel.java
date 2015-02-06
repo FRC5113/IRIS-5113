@@ -18,7 +18,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.lemons5113.iris.IRISCamManager;
-import org.lemons5113.iris.gui.settings.IRISColorPicker;
+import org.lemons5113.iris.gui.settings.ColorPickerSett;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -62,8 +62,8 @@ public class IRISCamPanel extends JPanel
 //    	Core.inRange(m, new Scalar(38, 50, 50), new Scalar(255, 100, 100), m);
     	
     	Core.inRange(imgHSV, 
-    			new Scalar(IRISColorPicker.colorLow.getBlue(), IRISColorPicker.colorLow.getGreen(), IRISColorPicker.colorLow.getRed()),
-    			new Scalar(IRISColorPicker.colorHigh.getBlue(), IRISColorPicker.colorHigh.getGreen(), IRISColorPicker.colorHigh.getRed()),    			thresholdedImg);
+    			new Scalar(ColorPickerSett.colorLow.getBlue(), ColorPickerSett.colorLow.getGreen(), ColorPickerSett.colorLow.getRed()),
+    			new Scalar(ColorPickerSett.colorHigh.getBlue(), ColorPickerSett.colorHigh.getGreen(), ColorPickerSett.colorHigh.getRed()),    			thresholdedImg);
     //	System.out.println("b " + CvType.typeToString(thresholdedImg.type()));
     	
     	Imgproc.cvtColor(thresholdedImg, m, Imgproc.COLOR_GRAY2BGR);

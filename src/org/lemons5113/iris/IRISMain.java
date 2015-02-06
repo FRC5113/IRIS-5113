@@ -1,7 +1,7 @@
 package org.lemons5113.iris;
 
 import org.lemons5113.iris.gui.IRISGui;
-import org.lemons5113.iris.gui.settings.IRISSettingsPanel;
+import org.lemons5113.iris.gui.settings.ImgSourceSett;
 import org.opencv.core.Core;
 
 /*
@@ -33,6 +33,7 @@ public class IRISMain
 	
 	public IRISMain()
 	{
+		System.out.println("IRIS has started!");
 		initAll();
 		
 		while(gui.getIsOpened())

@@ -7,35 +7,31 @@ import org.lemons5113.iris.gui.settings.SettingsBase;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-public class ProcessBase {
+public abstract class ProcessBase {
 	
-	protected Mat mat;
 	protected BufferedImage img;
 	public static boolean updatedImage = false;
 	protected SettingsBase sett;
+	protected ProcessBase child;
 	
-	protected ProcessBase()
+	public abstract void processMat(Mat mat);
+	
+	public ProcessBase()
 	{
 	}
-	
 	public ProcessBase(SettingsBase sett)
 	{
 		this.sett = sett;
 	}
 	
+	public void setChild(ProcessBase child)
+	{
+		this.child = child;
+	}
+	
 	public BufferedImage getDisplayImage()
 	{
 		return img;
-	}
-	
-	public Mat getProcessingMat()
-	{
-		return mat;
-	}
-	
-	public void update()
-	{
-		
 	}
 	
     public static BufferedImage mat2Img(Mat mat)

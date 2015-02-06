@@ -4,27 +4,26 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javafx.geometry.Dimension2DBuilder;
-
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import org.lemons5113.iris.gui.settings.IRISSettingsPanel;
+import org.lemons5113.iris.gui.settings.ImgSourceSett;
+import org.lemons5113.iris.gui.settings.SettingsBase;
 import org.lemons5113.iris.process.ProcessBase;
 
 public class ProcessPanel extends JPanel {
 
-	private IRISSettingsPanel sett;
-	private ProcessBase proc;
+	protected SettingsBase sett;
+	public ProcessBase proc;
 	public String name = "Default Process Panel";
 	
-	private JPanel imageFrame;
+	protected JPanel imageFrame;
 	
 	public ProcessPanel()
 	{
 	}
 	
-	public void init(IRISSettingsPanel sett, ProcessBase proc)
+	public void init(SettingsBase sett, ProcessBase proc)
 	{
 		this.sett = sett;
 		this.proc = proc;
@@ -38,8 +37,9 @@ public class ProcessPanel extends JPanel {
 		        g.drawImage(proc.getDisplayImage(), 0, 0, null);
 			}
 		};
+		imageFrame.setPreferredSize(new Dimension(512, 512));
 		imageFrame.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-		imageFrame.setPreferredSize(new Dimension(proc.getDisplayImage().getWidth(), proc.getDisplayImage().getHeight()));
+		//imageFrame.setPreferredSize(new Dimension(proc.getDisplayImage().getWidth(), proc.getDisplayImage().getHeight()));
 
 		add(imageFrame);
 		
@@ -50,7 +50,9 @@ public class ProcessPanel extends JPanel {
 	public void update()
 	{
 		sett.update();
-		proc.update();
 		imageFrame.repaint();
+		
+			//if(proc.getDisplayImage() != null)
+
 	}
 }

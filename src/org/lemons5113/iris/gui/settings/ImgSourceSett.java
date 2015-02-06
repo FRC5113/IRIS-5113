@@ -22,7 +22,7 @@ import javax.swing.SpinnerNumberModel;
 import org.lemons5113.iris.IRISCamManager;
 
 //This makes buttons. No seriously, thats practically all it does. Admittedly those buttons are useful but....
-public class IRISSettingsPanel extends SettingsBase
+public class ImgSourceSett extends SettingsBase
 {	
 	private enum states {Robot_Cam, Image_File, Computer_Cam};
 	private JComboBox type = new JComboBox(states.values());

@@ -9,24 +9,29 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-public class IRISColorPicker extends JPanel 
+public class ColorPickerSett extends SettingsBase 
 {
+	
+	public enum type {BGR, HSV, HLS};
 	
 	public static Color colorHigh;
 	public static Color colorLow;
 	private JColorChooser chooserHigh;
 	private JColorChooser chooserLow;
-
+	private JComboBox typeBox;
 	
 	public void init()
 	{
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		typeBox = new JComboBox(type.values());
+		add(typeBox);
+		//setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		colorHigh = new Color(1, 1, 1);
 		colorLow = new Color(1, 1, 1);
 		chooserHigh = new JColorChooser(colorHigh);
@@ -34,7 +39,7 @@ public class IRISColorPicker extends JPanel
 		add(chooserHigh);
 		add(chooserLow);
 		
-		setBorder(BorderFactory.createTitledBorder("Color"));
+		setBorder(BorderFactory.createTitledBorder("Colors"));
 
 	}
 	
