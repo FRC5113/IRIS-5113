@@ -35,8 +35,8 @@ public class ColorPickerSett extends SettingsBase
 		typeBox = new JComboBox(type.values());
 		add(typeBox);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		colorHigh = new Color(1, 1, 1);
-		colorLow = new Color(1, 1, 1);
+		colorHigh = new Color(254, 254, 249);
+		colorLow = new Color(143, 114, 86);
 		chooserHigh = new JColorChooser(colorHigh);
 		chooserLow = new JColorChooser(colorLow);
 		add(new JLabel("Lower Bounds"));
