@@ -2,6 +2,11 @@ package org.lemons5113.iris.gui;
 
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -18,8 +23,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.PopupFactory;
 
 import org.lemons5113.iris.gui.settings.ColorPickerSett;
 import org.lemons5113.iris.gui.settings.ImgSourceSett;
@@ -27,6 +35,14 @@ import org.lemons5113.iris.process.SourceImageProc;
 import org.opencv.core.Mat;
 
 import edu.wpi.first.wpilibj.networktables2.util.List;
+
+class MenuActionListener implements ActionListener
+{
+	public void actionPerformed(ActionEvent e)
+	{
+		System.out.println("Selected: " + e.getActionCommand());
+	}
+}
 
 //The heart and soul of this gui for VR. This is where the frame itself is made and formatted
 //also,  ༼ つ ◕_◕ ༽つ Yay! Vision Recognition!
@@ -53,11 +69,70 @@ public class IRISGui
             }
         } );
         
+        ImageIcon icon5113 = new ImageIcon("icon_small.png");
+        
         JMenuBar menuBar = new JMenuBar();
         JMenu aboutMenu = new JMenu("Help");
-        JMenuItem about = new JMenuItem("About IRIS");
-        aboutMenu.add(about);
+        JMenu kyleDrouin = new JMenu("Yo Boi");
+        JMenu settingMenu = new JMenu("Settings");
+        JMenu miscMenu = new JMenu("Misc IRIS Menu");
+        
+        JPopupMenu popup5113 = new JPopupMenu();
+        popup5113.add(new JTextArea("Test string"));
+        PopupFactory fact = PopupFactory.getSharedInstance();
+        
+        JMenuItem about5113 = new JMenuItem("About 5113/FRC");
+        about5113.addMouseListener(new MouseAdapter() {
+        	public void mousePressed(MouseEvent e){
+        		maybeShowPopup(e);
+        	}
+        	
+        	public void mouseReleased(MouseEvent e){
+        		maybeShowPopup(e);
+        	}
+        	
+        	private void maybeShowPopup(MouseEvent e){
+        		if(e.isPopupTrigger()){
+        			popup5113.show(e.getComponent(), e.getX(), e.getY());
+        		}
+        	}
+		});
+        JMenuItem aboutIRIS = new JMenuItem("About IRIS");
+        aboutIRIS.addActionListener(new MenuActionListener());
+        JMenuItem aboutGuide = new JMenuItem("Guide/Documentation");
+        aboutGuide.addActionListener(new MenuActionListener());
+        JMenuItem aboutKyle = new JMenuItem("About Kyle Drouin");
+        aboutKyle.addActionListener(new MenuActionListener());
+        JMenuItem settingDisable = new JMenuItem("Disable Draw Display Image");
+        settingDisable.addActionListener(new MenuActionListener());
+        JMenuItem settingSplit = new JMenuItem("Split Pane or Tabbed Pane");
+        settingSplit.addActionListener(new MenuActionListener());
+        JMenuItem settingTeamNumber = new JMenuItem("Default Team Number");
+        settingTeamNumber.addActionListener(new MenuActionListener());
+        JMenuItem miscEnableDisable = new JMenuItem("Disable/Enable Force Process Unchanged Image Always");
+        miscEnableDisable.addActionListener(new MenuActionListener());
+        JMenuItem miscForce = new JMenuItem("Force Process Unchanged Image Once");
+        miscForce.addActionListener(new MenuActionListener());
+        JMenuItem miscLoad = new JMenuItem("Load Config File");
+        miscLoad.addActionListener(new MenuActionListener());
+                
+        aboutMenu.add(about5113);
+        aboutMenu.add(aboutIRIS);
+        kyleDrouin.add(aboutKyle);
+        aboutMenu.add(aboutGuide);
+        settingMenu.add(settingDisable);
+        settingMenu.add(settingSplit);
+        settingMenu.add(settingTeamNumber);
+        miscMenu.add(miscEnableDisable);
+        miscMenu.add(miscForce);
+        miscMenu.add(miscLoad);
+        
         menuBar.add(aboutMenu);
+        menuBar.add(settingMenu);
+        menuBar.add(miscMenu);
+        menuBar.add(kyleDrouin);
+           
+        about5113.setIcon(icon5113);
         frame.setJMenuBar(menuBar);
         /*
          * TODO:
@@ -67,7 +142,7 @@ public class IRISGui
          * Guide/Documentation
          * 
          * Settings:
-         * Disable Draw Display Image 
+         * Disable Draw Display Image
          * Split Pane or Tabbed Pane
          * Default Team Number
          * 
