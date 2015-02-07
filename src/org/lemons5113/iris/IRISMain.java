@@ -21,39 +21,39 @@ import org.opencv.core.Core;
  *
  */
 
-public class IRISMain 
-{	
+public class IRISMain
+{
 	private IRISTableManager tables;
 	private IRISGui gui;
-	
-	public static void main(String[] args) 
+
+	public static void main(String[] args)
 	{
 		new IRISMain();
 	}
-	
+
 	public IRISMain()
 	{
 		System.out.println("IRIS has started!");
 		initAll();
-		
-		while(gui.getIsOpened())
+
+		while (gui.getIsOpened())
 		{
 			tables.stupidTestPleaseIgnore();
 			gui.update();
 		}
 		System.out.println("IRIS has ended.");
 	}
-	
+
 	private void initAll()
 	{
-		//Import OpenCV stuffs
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-                        
+		// Import OpenCV stuffs
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
 		initUI();
-		
+
 		tables = new IRISTableManager();
 	}
-	
+
 	private void initUI()
 	{
 		gui = new IRISGui();
