@@ -4,7 +4,7 @@ import org.lemons5113.iris.gui.IRISGui;
 import org.lemons5113.iris.gui.settings.ImgSourceSett;
 import org.opencv.core.Core;
 
-/*
+/**
  * Author: Jacob Laurendeau
  * Team 5113, Combustible Lemons IRIS system
  * 
@@ -16,8 +16,8 @@ import org.opencv.core.Core;
  * ...I fully intend to name all of our projects as acronyms of mythology names.
  * I thought it was cool anyways...
  *
- * IRIS is a method by which camera code is sent to the laptop, processed in a program outside of the robot code,
- * put into a nice UI, and sent back to the robot program.
+ * IRIS is a tool by which camera code is sent to the laptop, processed in a program outside of the robot code,
+ * put into a nice UI, and sent back to the robot program to be later interpreted as movement signals.
  *
  */
 

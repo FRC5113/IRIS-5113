@@ -45,7 +45,7 @@ public class SourceImageProc extends ProcessBase
 
 	public void initCVCamera()
 	{
-		cvCam = new VideoCapture(0);
+		cvCam = new VideoCapture(((ImgSourceSett) sett).getComputerCameraID());
 		camera.disconnect();
 	}
 

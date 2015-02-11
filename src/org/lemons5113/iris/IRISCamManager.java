@@ -20,8 +20,12 @@ import javax.imageio.ImageIO;
 import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-//This is the complicated bit. This is the code that connects to the camera, formats the camera for our use, and a bucket full of error checks.
+/**
+ * 
+ * @author Jacob Laurendeau
+ * Thread object for managing a single camera's connection and settings. This camera is periodically checked for updates to its image.
+ * Based off of SmartDashboard's USB Camera viewer, modified to work with vision recognition
+ */
 public class IRISCamManager implements Runnable
 {
 	// lots o' variables

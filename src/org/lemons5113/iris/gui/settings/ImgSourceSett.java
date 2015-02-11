@@ -38,6 +38,9 @@ public class ImgSourceSett extends SettingsBase
 
 	// Computer cam stuff
 	private JButton button_resetCVCam;
+	
+	private JLabel label_computer_cam_ID;
+	private JSpinner spinner_computer_cam_ID;
 
 	// Robo cam stuff
 	private JButton button_resetConnection;
@@ -127,6 +130,11 @@ public class ImgSourceSett extends SettingsBase
 			}
 		});
 		compCameraSetts.add(button_resetCVCam);
+		
+		label_computer_cam_ID = new JLabel("Computer Cam ID");
+		compCameraSetts.add(label_computer_cam_ID);
+		spinner_computer_cam_ID = new JSpinner(new SpinnerNumberModel(0, 0, 999999, 1));
+		compCameraSetts.add(spinner_computer_cam_ID);
 
 		roboCameraSetts.setVisible(true);
 		imageFileSetts.setVisible(false);
@@ -156,6 +164,11 @@ public class ImgSourceSett extends SettingsBase
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+	}
+	
+	public int getComputerCameraID()
+	{
+		return (Integer) spinner_computer_cam_ID.getValue();
 	}
 
 	public void update()

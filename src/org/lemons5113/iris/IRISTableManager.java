@@ -1,9 +1,13 @@
 package org.lemons5113.iris;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+/**
+ * 
+ * @author Jacob Laurendeau
+ * Responsible for outputting and managing of all data in the "NetworkTable" object.
+ * This is the client side of the table management, and is NOT run on the robot's cRIO/roboRIO.
+ */
 
-//Responsible for outputting and keeping track of all data in the "NetworkTable" object.
-//This is the client side of the table management, NOT run on the robot side.
 
 public class IRISTableManager
 {
