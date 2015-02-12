@@ -159,6 +159,10 @@ public class IRISGui
 		ProcessPanel panel2 = new ProcPan_ColorThresh();
 		panel1.proc.setChild(panel2.proc);
 		panels.add(panel2);
+		
+		ProcessPanel panel3 = new ProcPan_BoxFinder();
+		panel2.proc.setChild(panel3.proc);
+		panels.add(panel3);
 
 		JTabbedPane processes = new JTabbedPane();
 
