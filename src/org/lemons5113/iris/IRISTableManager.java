@@ -1,5 +1,7 @@
 package org.lemons5113.iris;
 
+import org.opencv.core.Rect;
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 /**
  * 
@@ -16,22 +18,14 @@ public class IRISTableManager
 	private String robotIP = "roboRIO-5113.local";
 	private String tableName = "IRISTable";
 
-	private long timer = 0;
-
+	private static IRISTableManager manager;
+	
+	public static IRISTableManager getIRISTableInstance()
+	{
+		return manager;
+	}
+	
 	public IRISTableManager()
-	{
-		init();
-	}
-
-	// TODO:
-	// When this is set, a network variable is sent to the robot to force it to
-	// give back the specified camera.
-	public void RequestCameraName(String name)
-	{
-
-	}
-
-	private void init()
 	{
 		try
 		{
@@ -42,18 +36,19 @@ public class IRISTableManager
 		}
 		table = NetworkTable.getTable(tableName);
 	}
-
-	// ignore it. It totally isn't the code that will allow the robots in FIRST
-	// to rise up and enslave the human race
-	public void stupidTestPleaseIgnore()
+	
+	public static void init()
+	{		
+		manager = new IRISTableManager();
+	}
+	
+	
+	//X, Y, W, H, D, A; Returns closest yellow tote as indicated bby the largest rect found
+	public void setYellowToteData(Rect rekt, float distance, int angle)
 	{
-		if (System.currentTimeMillis() > timer + 1000)
-		{
-			timer = System.currentTimeMillis();
-			double val = Math.random();
-			table.putNumber("testValue", val);
-			// System.out.println("new testvalue : " + val);
-		}
+		String str;
+		str = rekt.x + "," + rekt.y + "," + rekt.width + "," + rekt.height + "," + distance + "," + angle;
+		table.putString("YellowToteData", str);
 	}
 
 }

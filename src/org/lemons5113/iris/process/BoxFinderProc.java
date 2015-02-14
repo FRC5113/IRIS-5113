@@ -10,6 +10,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.lemons5113.iris.IRISCamManager;
+import org.lemons5113.iris.IRISTableManager;
 import org.lemons5113.iris.gui.settings.ColorPickerSett;
 import org.lemons5113.iris.gui.settings.ImgSourceSett;
 import org.lemons5113.iris.gui.settings.SettingsBase;
@@ -50,20 +51,26 @@ public class BoxFinderProc extends ProcessBase
 		
 		Imgproc.cvtColor(mat, mat, Imgproc.COLOR_GRAY2BGR);
 
-		int max = 0;
 		List<Rect> rekt = new ArrayList<Rect>();
+		Rect maxRect = null;
 		for(int x = 0; x < points.size(); x++)
 		{
 			Mat contour = points.get(x);
-			max = (int) Math.max(max, Imgproc.contourArea(contour));
 			Rect r = Imgproc.boundingRect(points.get(x));
 			rekt.add(r);
-			Imgproc.rectangle(mat, r.br(), r.tl(), new Scalar(0, 0, 255), 3);
-			Imgproc.putText(mat, "" + max, new Point(r.tl().x, r.tl().y - 5), Core.FONT_HERSHEY_PLAIN, 1, new Scalar(0, 0, 255));
-			Imgproc.putText(mat, r.toString() + ", " + r.area(), new Point(r.tl().x, r.tl().y - 18), Core.FONT_HERSHEY_PLAIN, 1, new Scalar(0, 255, 0));
+			if(maxRect == null || r.size().area() > maxRect.size().area())
+			{
+				maxRect = r;
+			}
 		}
 		
-		System.out.println(max);
+		Imgproc.rectangle(mat, maxRect.br(), maxRect.tl(), new Scalar(0, 0, 255), 3);
+		Imgproc.putText(mat, "RH: " + maxRect.size().height, new Point(maxRect.tl().x, maxRect.tl().y - 5), Core.FONT_HERSHEY_PLAIN, 1, new Scalar(0, 0, 255));
+		Imgproc.putText(mat, "RL: " + maxRect.size().width, new Point(maxRect.tl().x, maxRect.tl().y - 18), Core.FONT_HERSHEY_PLAIN, 1, new Scalar(0, 255, 0));
+		float distance = (170) / ((float)Math.pow(maxRect.size().height, 0.95));
+		Imgproc.putText(mat, "D: " + distance, new Point(maxRect.tl().x, maxRect.tl().y - 31), Core.FONT_HERSHEY_PLAIN, 1, new Scalar(0, 255, 0));
+	
+		IRISTableManager.getIRISTableInstance().setYellowToteData(maxRect, distance, 0);
 		
 		}
 		catch(Exception e)

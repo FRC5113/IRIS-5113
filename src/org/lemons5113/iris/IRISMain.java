@@ -23,7 +23,6 @@ import org.opencv.core.Core;
 
 public class IRISMain
 {
-	private IRISTableManager tables;
 	private IRISGui gui;
 
 	public static void main(String[] args)
@@ -38,7 +37,6 @@ public class IRISMain
 
 		while (gui.getIsOpened())
 		{
-			tables.stupidTestPleaseIgnore();
 			gui.update();
 		}
 		System.out.println("IRIS has ended.");
@@ -51,7 +49,7 @@ public class IRISMain
 
 		initUI();
 
-		tables = new IRISTableManager();
+		IRISTableManager.init();
 	}
 
 	private void initUI()
