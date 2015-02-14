@@ -1,5 +1,6 @@
 package org.lemons5113.iris.gui;
 
+import org.lemons5113.iris.gui.settings.BoxPickerSett;
 import org.lemons5113.iris.gui.settings.ColorPickerSett;
 import org.lemons5113.iris.gui.settings.ImgSourceSett;
 import org.lemons5113.iris.process.BoxFinderProc;
@@ -12,14 +13,9 @@ public class ProcPan_BoxFinder extends ProcessPanel
 	public ProcPan_BoxFinder()
 	{
 		name = "Box Finder";
-		ColorPickerSett set = new ColorPickerSett();
+		BoxPickerSett set = new BoxPickerSett();
 		set.init();
-<<<<<<< HEAD
-		//init(set, new BoxFinderProc(set));
-
-=======
 		init(set, new BoxFinderProc(set));
->>>>>>> origin/master
 	}
 
 }

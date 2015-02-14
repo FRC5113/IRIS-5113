@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import org.lemons5113.iris.IRISCamManager;
 import org.lemons5113.iris.IRISTableManager;
+import org.lemons5113.iris.gui.settings.BoxPickerSett;
 import org.lemons5113.iris.gui.settings.ColorPickerSett;
 import org.lemons5113.iris.gui.settings.ImgSourceSett;
 import org.lemons5113.iris.gui.settings.SettingsBase;
@@ -31,7 +32,7 @@ import org.opencv.*;
 public class BoxFinderProc extends ProcessBase
 {
 
-	public BoxFinderProc(ColorPickerSett sett)
+	public BoxFinderProc(BoxPickerSett sett)
 	{
 		this.sett = sett;
 	}

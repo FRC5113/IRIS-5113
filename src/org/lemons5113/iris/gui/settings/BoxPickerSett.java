@@ -13,7 +13,7 @@ public class BoxPickerSett extends SettingsBase
 	private JSlider slider1;
 	private JButton button;
 	
-	private void init()
+	public void init()
 	{
 	button = new JButton();
 	button.addActionListener(new ActionListener()
