@@ -14,7 +14,7 @@ public class ProcPan_BoxFinder extends ProcessPanel
 		name = "Box Finder";
 		ColorPickerSett set = new ColorPickerSett();
 		set.init();
-		init(set, new BoxFinderProc(set));
+		//init(set, new BoxFinderProc(set));
 
 	}
 
