@@ -295,6 +295,8 @@ public class ColorPickerSett extends SettingsBase
 		add(spinner6);
 
 		setBorder(BorderFactory.createTitledBorder("Colors"));
+		
+		presetBox.setSelectedIndex(1);
 
 	}
 

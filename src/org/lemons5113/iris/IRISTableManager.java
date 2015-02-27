@@ -38,7 +38,12 @@ public class IRISTableManager
 		}
 		table = NetworkTable.getTable(tableName);
 		
-		lastCamera = table.getBoolean("HighCamera");		
+		if(!table.containsKey("HighCamera"))
+		{
+			table.putBoolean("HighCamera", true);
+		}
+		
+		lastCamera = table.getBoolean("HighCamera");
 	}
 	
 	public void update()
