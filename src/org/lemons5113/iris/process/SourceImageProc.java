@@ -34,8 +34,16 @@ public class SourceImageProc extends ProcessBase
 			String wirelessConnection)
 	{
 		camera.init(fps, port, usbConnection, wirelessConnection);
-		cvCam.release();
-		cvCam = null;
+		try
+		{
+			if(cvCam != null)
+				cvCam.release();
+			cvCam = null;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public void initCVCameraImage()

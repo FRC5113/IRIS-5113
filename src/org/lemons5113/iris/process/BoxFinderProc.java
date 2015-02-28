@@ -41,10 +41,11 @@ public class BoxFinderProc extends ProcessBase
 	@Override
 	public void processMat(Mat mat)
 	{
+		
+		try{
+		
 		Imgproc.morphologyEx(mat, mat, Imgproc.MORPH_OPEN, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(8, 8)));
 		Imgproc.morphologyEx(mat, mat, Imgproc.MORPH_CLOSE, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(8, 8)));
-
-		try{
 		
 		List<MatOfPoint> points = new ArrayList<MatOfPoint>();
 		
