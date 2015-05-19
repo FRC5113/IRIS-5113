@@ -6,6 +6,7 @@ import org.lemons5113.iris.gui.settings.ColorPickerSett;
 import org.lemons5113.iris.gui.settings.ImgSourceSett;
 import org.lemons5113.iris.process.ColorThresholdProc;
 import org.lemons5113.iris.process.SourceImageProc;
+import org.opencv.core.Mat;
 
 public class ProcPan_Source extends ProcessPanel
 {
@@ -26,5 +27,4 @@ public class ProcPan_Source extends ProcessPanel
 		// if(proc.getDisplayImage() != null)
 		// imageFrame.setPreferredSize(new Dimension(512, 512));
 	}
-
 }

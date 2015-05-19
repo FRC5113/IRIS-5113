@@ -35,6 +35,7 @@ public class IRISTableManager
 			NetworkTable.setIPAddress(robotIP);
 		} catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 		table = NetworkTable.getTable(tableName);
 		
@@ -46,18 +47,14 @@ public class IRISTableManager
 		lastCamera = table.getBoolean("HighCamera");
 	}
 	
-	public void update()
-	{
-		boolean tempBool = table.getBoolean("HighCamera");
-		if(tempBool != lastCamera)
-		{
-			lastCamera = tempBool;			
-		}
-	}
-	
 	public static void init()
 	{		
 		manager = new IRISTableManager();
+	}
+	
+	public void setAutonPresetData(String data)
+	{
+		table.putString("AutonPreset", data);
 	}
 	
 	

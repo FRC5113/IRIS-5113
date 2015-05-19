@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import org.lemons5113.iris.IRISCamManager;
+import org.lemons5113.iris.IRISTableManager;
 import org.lemons5113.iris.process.SourceImageProc;
 
 //This makes buttons. No seriously, thats practically all it does. Admittedly those buttons are useful but....
@@ -29,8 +30,15 @@ public class ImgSourceSett extends SettingsBase
 	{
 		Robot_Cam, Image_File, Computer_Cam
 	};
+	
+	public enum AUTONPRESET
+	{
+		NONE, TOTE_CLEAR, TOTE_STEP
+	};
 
 	public JComboBox type = new JComboBox(states.values());
+	
+	public JComboBox auton = new JComboBox(AUTONPRESET.values());
 
 	private JPanel roboCameraSetts;
 	private JPanel imageFileSetts;
@@ -86,6 +94,8 @@ public class ImgSourceSett extends SettingsBase
 
 		add(new JLabel("Image Source"));
 		add(type);
+		add(new JLabel("Auton Preset Shortcut"));
+		add(auton);
 		add(new JLabel(" "));
 		add(new JLabel(" "));
 
@@ -116,7 +126,7 @@ public class ImgSourceSett extends SettingsBase
 
 		label_spinner_fps = new JLabel("FPS");
 		roboCameraSetts.add(label_spinner_fps);
-		spinner_fps = new JSpinner(new SpinnerNumberModel(24, 0, 999999, 1));
+		spinner_fps = new JSpinner(new SpinnerNumberModel(8, 0, 999999, 1));
 		roboCameraSetts.add(spinner_fps);
 
 		// CV Cam stuff
@@ -173,6 +183,9 @@ public class ImgSourceSett extends SettingsBase
 
 	public void update()
 	{
+		
+		IRISTableManager.getIRISTableInstance().setAutonPresetData(auton.getSelectedItem().toString());
+		
 		if (type.getSelectedItem() == states.Computer_Cam)
 		{
 			roboCameraSetts.setVisible(false);

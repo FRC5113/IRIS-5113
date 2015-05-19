@@ -62,7 +62,7 @@ public class IRISGui
 	public IRISGui()
 	{
 		frame = new JFrame(
-				"5113 IRIS Systems 2015			          ༼ つ ◕_◕ ༽つ GIVE VISION RECOGNITION");
+				"5113 IRIS Systems 2015		    Version [1.337b]	          ༼ つ ◕_◕ ༽つ GIVE VISION RECOGNITION");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter()
 		{
@@ -160,9 +160,9 @@ public class IRISGui
 		panel1.proc.setChild(panel2.proc);
 		panels.add(panel2);
 		
-		ProcessPanel panel3 = new ProcPan_BoxFinder();
-		panel2.proc.setChild(panel3.proc);
-		panels.add(panel3);
+//		ProcessPanel panel3 = new ProcPan_BoxFinder();
+//		panel2.proc.setChild(panel3.proc);
+//		panels.add(panel3);
 
 		JTabbedPane processes = new JTabbedPane();
 
@@ -176,7 +176,7 @@ public class IRISGui
 		frame.add(processes);
 
 		// frame.pack();
-		frame.setSize(720, 480);
+		frame.setSize(1000, 700);
 		frame.setVisible(true);
 
 	}

@@ -6,6 +6,9 @@ import java.awt.image.DataBufferByte;
 import org.lemons5113.iris.gui.settings.SettingsBase;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 
 public abstract class ProcessBase
 {
@@ -14,7 +17,8 @@ public abstract class ProcessBase
 	public static boolean updatedImage = false;
 	protected SettingsBase sett;
 	protected ProcessBase child;
-
+	
+	
 	public abstract void processMat(Mat mat);
 
 	public ProcessBase()

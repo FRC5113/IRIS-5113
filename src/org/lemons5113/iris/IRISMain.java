@@ -35,11 +35,27 @@ public class IRISMain
 		System.out.println("IRIS has started!");
 		initAll();
 
+		long timer = System.currentTimeMillis();
+		long interval = 24;
 		while (gui.getIsOpened())
 		{
-			gui.update();
+			if(System.currentTimeMillis() - timer >= 50)
+			{
+				gui.update();
+				timer = System.currentTimeMillis();
+			}
+			else
+			{
+				try {
+					Thread.sleep(25);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		System.out.println("IRIS has ended.");
+		System.exit(0);
 	}
 
 	private void initAll()

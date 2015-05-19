@@ -39,7 +39,7 @@ public class ProcessPanel extends JPanel
 				g.drawImage(proc.getDisplayImage(), 0, 0, null);
 			}
 		};
-		imageFrame.setPreferredSize(new Dimension(512, 512));
+		imageFrame.setPreferredSize(new Dimension(640, 480));
 		imageFrame.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
 		// imageFrame.setPreferredSize(new
 		// Dimension(proc.getDisplayImage().getWidth(),

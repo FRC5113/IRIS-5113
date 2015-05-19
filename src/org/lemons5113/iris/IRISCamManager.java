@@ -29,10 +29,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IRISCamManager implements Runnable
 {
 	// lots o' variables
-	public int fps = 30;// Frames per second
+	public int fps = 5;// Frames per second
 	private int port = 1180;
 	private String usbConnectionIP = "roboRIO-5113.local";
-	private String wirelessConnectionIP = "10.51.13.2";
+	private String wirelessConnectionIP = "10.51.13.11";
 	private static final byte[] MAGIC_NUMBERS = { 1, 0, 0, 0 };// The numbers
 																// that tell the
 																// [RobotRio](not
@@ -43,7 +43,7 @@ public class IRISCamManager implements Runnable
 	private static final int SIZE_640x480 = 0;
 	private static final int SIZE_320x240 = 1;
 	private static final int SIZE_160x120 = 2;
-	private static final int HW_COMPRESSION = -1;// can either be -1 or 1, (Also
+	private static final int HW_COMPRESSION = 1;// can either be -1 or 1, (Also
 													// needs to be clarified)
 	private BufferedImage frame = null;
 	private final Object frameMutex = new Object();
@@ -72,7 +72,6 @@ public class IRISCamManager implements Runnable
 
 		this.thread = new Thread(this);
 		this.thread.start();
-
 	}
 
 	public BufferedImage getLastImage()
@@ -104,7 +103,7 @@ public class IRISCamManager implements Runnable
 		{
 			for (;;)
 			{
-
+				
 				System.out.println("Trying to connect to " + usbConnectionIP
 						+ ":" + port + "...");
 
@@ -134,11 +133,11 @@ public class IRISCamManager implements Runnable
 
 				outputStream.writeInt(fps);
 				outputStream.writeInt(-1);
-				outputStream.writeInt(0);
+				outputStream.writeInt(2);
 				outputStream.flush();
 
 				while (!Thread.interrupted())
-				{
+				{					
 					byte[] magic = new byte[4];
 					inputStream.readFully(magic);
 					int size = inputStream.readInt();
@@ -156,6 +155,7 @@ public class IRISCamManager implements Runnable
 						if (this.frame != null)
 						{
 							this.frame.flush();
+							Thread.sleep(100);
 						}
 						this.frame = ImageIO
 								.read(new ByteArrayInputStream(data));
@@ -202,6 +202,9 @@ public class IRISCamManager implements Runnable
 				this.errorMessage = e.getMessage();
 				System.out.println("Error: " + errorMessage);
 			}
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		} finally
 		{
 			if (this.socket != null)
